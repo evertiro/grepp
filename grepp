@@ -2,7 +2,7 @@
 #
 # grepp - grep by paragraph
 # Copyright (C) 2009 Daniel J Griffiths <ghost1227@archlinux.us>
-#                and David Crouse <crouse@archlinux.us>
+#            original code by David Crouse <crouse@archlinux.us>
 #
 # This program is free software; you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
