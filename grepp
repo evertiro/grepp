@@ -1,0 +1,91 @@
+#!/bin/bash
+#
+# grepp - grep by paragraph
+# Copyright (C) 2009 Daniel J Griffiths <ghost1227@archlinux.us>
+#                and David Crouse <crouse@archlinux.us>
+#
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful, but
+# WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA
+# 02110-1301, USA.  
+
+############################################################
+# Configure stuff
+############################################################
+# ARG1/ARG2    =    Don't screw with these, they create the
+#                       variables for storing arguments
+# VER          =    Stores the current version of grepp
+# TITLE        =    Don't screw with this either, it's just
+#                       here to make my life easier
+
+ARG1=$1
+ARG2=$2
+VER=0.1
+TITLE="grep by paragraph"
+
+############################################################
+# Version function
+############################################################
+version() {
+	echo "grepp v$VER - $TITLE"
+}
+
+############################################################
+# Usage function
+############################################################
+usage() {
+	echo "Usage: grepp PATTERN [FILE]"
+	echo "Search for PATTERN in FILE."
+	echo
+	echo "Arguments:"
+	echo "  -h, --help      Display this message"
+	echo "  -v, --version   Output version information and exit"
+}
+
+############################################################
+# Fail function
+############################################################
+fail() {
+	echo "grepp: An unknown error occurred!"
+	exit
+}
+
+############################################################
+# Main function
+############################################################
+main() {
+	if [ $ARG2 ] && [ ! -f $ARG2 ]; then
+		echo "grepp: $ARG2: No such file or directory"
+		exit
+	fi
+	if [ $ARG2 ]; then
+		perl -00ne "print if /$ARG1/i" < $ARG2
+	else
+		perl -00ne "print if /$ARG1/i"
+	fi
+}
+
+############################################################
+# Check arguments passed at runtime
+############################################################
+case "$1" in
+	''|'-h'|'--help')
+	usage
+	;;
+	'-v'|'--version')
+	version
+	;;
+	*)
+	main
+	;;
+esac
